@@ -14,13 +14,18 @@
 
   --color-gray: #9e9e9e;
 
-  /* Gradients */
-  --gradient-purple: linear-gradient(to right, #ff9898, #8054ff);
+  --color-pink: #ff9898;
+
+  --color-purple: #8054ff;
 }
 
 @layer utilities {
   .bg-gradient-purple {
-    background-image: var(--gradient-purple);
+    background-image: linear-gradient(
+      to right,
+      var(--color-pink),
+      var(--color-purple)
+    );
   }
 
   .bg-decorations {
