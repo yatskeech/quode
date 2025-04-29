@@ -24,7 +24,7 @@ export default function RootLayout({
         <div className="container">
           <div className="bg-decorations flex min-h-screen flex-col">
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow py-20">{children}</main>
             <Footer />
           </div>
         </div>
