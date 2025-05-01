@@ -16,7 +16,7 @@ export default function Home() {
         </div>
         <Button variant="gradient">Решить задачи</Button>
       </div>
-      <div className="w-200">
+      <div className="w-full max-w-200">
         <CodeTyping />
       </div>
     </div>

@@ -47,6 +47,13 @@
       120px 120px,
       560px 560px;
   }
+
+  .bg-decorations-subtract {
+    background-image: url('/decorations/subtract.svg');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 480px;
+  }
 }
 
 @utility container {
