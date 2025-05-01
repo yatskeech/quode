@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Button } from '@/shared/ui';
 import { CodeTyping } from '@/widgets/CodeTyping';
 
@@ -14,7 +16,9 @@ export default function Home() {
             задачи, автоматическая проверка решений и персональный прогресс
           </p>
         </div>
-        <Button variant="gradient">Решить задачи</Button>
+        <Button asChild variant="gradient">
+          <Link href="/problems">Решить задачи</Link>
+        </Button>
       </div>
       <div className="w-full max-w-200">
         <CodeTyping />

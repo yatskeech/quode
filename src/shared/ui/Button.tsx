@@ -1,6 +1,8 @@
 import { cva, cx, VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes } from 'react';
 
+import { Slot } from './Slot';
+
 const button = cva(
   'cursor-pointer transition-all focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-white',
   {
@@ -24,10 +26,18 @@ const button = cva(
 );
 
 type ButtonProps = VariantProps<typeof button> &
-  ButtonHTMLAttributes<HTMLButtonElement>;
+  ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean };
 
-export function Button({ className, variant, size, ...rest }: ButtonProps) {
+export function Button({
+  asChild,
+  className,
+  variant,
+  size,
+  ...rest
+}: ButtonProps) {
+  const Computed = asChild ? Slot : 'button';
+
   return (
-    <button {...rest} className={cx(button({ variant, size }), className)} />
+    <Computed {...rest} className={cx(button({ variant, size }), className)} />
   );
 }

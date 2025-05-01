@@ -9,8 +9,12 @@ export function Header() {
         <Logo className="w-32" />
       </Link>
       <div className="flex items-center gap-4">
-        <Button variant="text">Войти</Button>
-        <Button variant="gradient">Зарегистрироваться</Button>
+        <Button asChild variant="text">
+          <Link href="/login">Войти</Link>
+        </Button>
+        <Button asChild variant="gradient">
+          <Link href="/register">Зарегистрироваться</Link>
+        </Button>
       </div>
     </header>
   );

@@ -8,12 +8,10 @@ export default function DecoratedLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <div className="bg-decorations-subtract min-h-screen">
-      <div className="container">
-        <div className="bg-decorations">
-          <Header />
-          <main className="flex-grow py-20">{children}</main>
-          <Footer />
-        </div>
+      <div className="bg-decorations container">
+        <Header />
+        <main className="flex-grow py-20">{children}</main>
+        <Footer />
       </div>
     </div>
   );
