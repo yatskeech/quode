@@ -12,17 +12,10 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.svg' },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: ReactNode }>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru">
       <body className={cx(rubik.className, 'bg-black-1 text-white')}>
-        {/* <div className="bg-decorations flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-grow py-20">{children}</main>
-            <Footer />
-          </div> */}
         {children}
       </body>
     </html>

@@ -4,17 +4,21 @@ import { ButtonHTMLAttributes } from 'react';
 import { Slot } from './Slot';
 
 const button = cva(
-  'cursor-pointer transition-all focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-white',
+  'cursor-pointer transition-all outline-none focus-visible:ring-1 focus-visible:ring-offset-1 focus-visible:ring-white',
   {
     variants: {
       variant: {
         default: 'bg-black-3 text-white hover:bg-black-3/75',
+        outlined:
+          'border-white border text-white hover:bg-white hover:text-black-3',
+        contained: 'bg-white text-black-3 hover:bg-white/75',
         gradient:
           'bg-gradient-purple bg-size-[100%_100%] text-white hover:from-pink/75 hover:bg-size-[200%_200%]',
         text: 'text-gray hover:text-white',
       },
       size: {
         md: 'rounded-xl px-8 py-3 text-sm',
+        lg: 'rounded-2xl px-8 py-4 text-sm',
         icon: 'rounded-xl p-3',
       },
     },

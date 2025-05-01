@@ -1,12 +1,14 @@
 'use client';
+
+import { cx } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-import { PAUSE, SPEED } from '../model/config';
+import { PAUSE, SPEED } from '../config/config';
 import { SNIPPETS } from '../model/snippets';
 import { theme } from '../model/theme';
 
-export function CodeTyping() {
+export function CodeTyping({ className }: { className?: string }) {
   const [snippetIndex, setSnippetIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [charIndex, setCharIndex] = useState(0);
@@ -34,7 +36,12 @@ export function CodeTyping() {
   }, [charIndex, code]);
 
   return (
-    <div className="bg-black-2 flex h-124 flex-col overflow-hidden rounded-3xl text-white">
+    <div
+      className={cx(
+        'bg-black-2 flex flex-col overflow-hidden rounded-3xl text-white',
+        className,
+      )}
+    >
       <span className="bg-black-3 border-pink border-b-2 px-8 py-4 text-xl font-medium capitalize">
         {language}
       </span>

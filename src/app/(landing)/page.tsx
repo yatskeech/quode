@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/shared/ui';
 import { CodeTyping } from '@/widgets/CodeTyping';
 
-export default function Home() {
+export default function Landing() {
   return (
     <div className="flex flex-col items-center gap-16">
       <div className="flex flex-col items-center gap-9">
@@ -20,9 +20,7 @@ export default function Home() {
           <Link href="/problems">Решить задачи</Link>
         </Button>
       </div>
-      <div className="w-full max-w-200">
-        <CodeTyping />
-      </div>
+      <CodeTyping className="h-124 w-full max-w-200" />
     </div>
   );
 }
