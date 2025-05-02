@@ -21,10 +21,15 @@ const button = cva(
         lg: 'rounded-2xl px-8 py-4 text-sm',
         icon: 'rounded-xl p-3',
       },
+      disabled: {
+        true: 'pointer-events-none opacity-50',
+        false: '',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'md',
+      disabled: false,
     },
   },
 );
@@ -37,11 +42,15 @@ export function Button({
   className,
   variant,
   size,
+  disabled,
   ...rest
 }: ButtonProps) {
   const Computed = asChild ? Slot : 'button';
 
   return (
-    <Computed {...rest} className={cx(button({ variant, size }), className)} />
+    <Computed
+      {...rest}
+      className={cx(button({ variant, size, disabled }), className)}
+    />
   );
 }

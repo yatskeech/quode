@@ -19,6 +19,26 @@
   --color-purple: #8054ff;
 }
 
+@layer base {
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+    color: var(--color-white) !important;
+    caret-color: var(--color-white) !important;
+    -webkit-text-fill-color: var(--color-white) !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill:focus {
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+    color: var(--color-white) !important;
+    caret-color: var(--color-white) !important;
+    -webkit-text-fill-color: var(--color-white) !important;
+  }
+}
+
 @layer utilities {
   .bg-gradient-purple {
     background-image: linear-gradient(

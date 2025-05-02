@@ -1,15 +1,9 @@
 import { ReactNode } from 'react';
-import { RiGithubFill, RiGoogleFill } from 'react-icons/ri';
 
-import { signIn } from '@/shared/api/auth';
-import { Button, Logo } from '@/shared/ui';
+import { OAuthButtons } from '@/features/auth';
+import { Logo } from '@/shared/ui';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
-  const handleSignIn = (providerId: 'google' | 'github') => async () => {
-    'use server';
-    await signIn(providerId, { redirectTo: '/' });
-  };
-
   return (
     <div className="bg-decorations container">
       <main className="flex min-h-screen flex-grow items-center justify-center py-12">
@@ -25,33 +19,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
               Авторизуйтесь, чтобы узнать больше
             </span>
           </div>
-          <div className="w-full">
-            <div className="flex flex-col gap-6">
-              {children}
-              <div className="flex items-center justify-between gap-6 text-center">
-                <span className="bg-gray h-px w-full rounded" />
-                <span className="text-gray text-sm">Или</span>
-                <span className="bg-gray h-px w-full rounded" />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  variant="outlined"
-                  onClick={handleSignIn('google')}
-                  className="flex flex-grow items-center justify-center gap-4 text-nowrap"
-                >
-                  <RiGoogleFill size={24} />
-                  Войти через Google
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={handleSignIn('github')}
-                  className="flex flex-grow items-center justify-center gap-4 text-nowrap"
-                >
-                  <RiGithubFill size={24} />
-                  Войти через Github
-                </Button>
-              </div>
+          <div className="flex w-full flex-col gap-6">
+            <OAuthButtons />
+            <div className="flex items-center justify-between gap-6 text-center">
+              <span className="bg-gray h-px w-full rounded" />
+              <span className="text-gray text-sm">Или</span>
+              <span className="bg-gray h-px w-full rounded" />
             </div>
+            <div className="flex flex-col gap-4">{children}</div>
           </div>
         </div>
       </main>
