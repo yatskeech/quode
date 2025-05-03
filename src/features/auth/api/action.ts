@@ -30,13 +30,23 @@ export async function registerAction(data: RegisterSchema) {
   const { email, password } = data;
 
   const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
+
+  if (!existing) {
+    await prisma.user.create({
+      data: { email, password: await hashPassword(password) },
+    });
+
+    return await loginAction(data);
+  }
+
+  if (existing?.password) {
     throw new Error('Пользователь с такой электронной почтой уже существует');
   }
 
-  await prisma.user.create({
-    data: { email, password: await hashPassword(password) },
+  await prisma.user.update({
+    where: { email },
+    data: { password: await hashPassword(password) },
   });
 
-  await loginAction(data);
+  return await loginAction(data);
 }
