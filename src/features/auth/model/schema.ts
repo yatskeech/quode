@@ -17,6 +17,8 @@ export const loginSchema = z.object({
   password: z.string().nonempty(ERROR_MESSAGES.PASSWORD.NONEMPTY),
 });
 
+export type LoginSchema = z.infer<typeof loginSchema>;
+
 export const registerSchema = loginSchema
   .extend({
     password: z
@@ -29,3 +31,5 @@ export const registerSchema = loginSchema
     message: ERROR_MESSAGES.CONFIRM,
     path: ['confirm'],
   });
+
+export type RegisterSchema = z.infer<typeof registerSchema>;

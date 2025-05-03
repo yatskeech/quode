@@ -1,39 +1,69 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/shared/ui';
-
-import { loginSchema } from '../model/schema';
+import { loginAction } from '../api/action';
+import { type LoginSchema, loginSchema } from '../model/schema';
+import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
 
 export function LoginForm() {
   const {
     register,
-    formState: { errors, isValid },
-  } = useForm({ mode: 'onBlur', resolver: zodResolver(loginSchema) });
+    setError,
+    clearErrors,
+    formState: { errors, isValid, isSubmitting },
+    handleSubmit,
+  } = useForm({ mode: 'onChange', resolver: zodResolver(loginSchema) });
+
+  const onSubmit = async (data: LoginSchema) => {
+    try {
+      await loginAction(data);
+    } catch (e) {
+      if (isRedirectError(e)) return;
+
+      if (e instanceof Error) {
+        setError('root', { message: e.message });
+      }
+    }
+  };
+
+  const handleChange = () => clearErrors('root');
+  const isDisable =
+    !isValid || isSubmitting || Boolean(Object.keys(errors).length);
 
   return (
-    <form className="flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={handleChange}
+      className="flex flex-col gap-6"
+    >
       <div className="flex flex-col gap-3">
         <FormInput
           {...register('email')}
           placeholder="Электронная почта"
+          autoComplete="email"
+          invalid={Boolean(errors.root)}
           error={errors.email?.message}
         />
         <FormInput
           {...register('password')}
           placeholder="Пароль"
           type="password"
+          autoComplete="current-password"
+          invalid={Boolean(errors.root)}
           error={errors.password?.message}
         />
       </div>
-      <div className="flex flex-col gap-4">
-        <Button variant="gradient" size="lg" disabled={!isValid}>
-          Войти
-        </Button>
-      </div>
+      <FormButton
+        isLoading={isSubmitting}
+        disabled={isDisable}
+        error={errors.root?.message}
+      >
+        Войти
+      </FormButton>
     </form>
   );
 }

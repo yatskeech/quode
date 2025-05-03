@@ -1,1 +1,1 @@
-export { auth as middleware } from '@/shared/api/auth';
+export { auth as middleware } from './auth';

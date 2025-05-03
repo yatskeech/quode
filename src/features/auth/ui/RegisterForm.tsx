@@ -1,25 +1,51 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/shared/ui';
-
-import { registerSchema } from '../model/schema';
+import { registerAction } from '../api/action';
+import { RegisterSchema, registerSchema } from '../model/schema';
+import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
 
 export function RegisterForm() {
   const {
     register,
-    formState: { errors, isValid },
-  } = useForm({ mode: 'onBlur', resolver: zodResolver(registerSchema) });
+    setError,
+    clearErrors,
+    formState: { errors, isValid, isSubmitting },
+    handleSubmit,
+  } = useForm({ mode: 'onChange', resolver: zodResolver(registerSchema) });
+
+  const onSubmit = async (data: RegisterSchema) => {
+    try {
+      await registerAction(data);
+    } catch (e) {
+      if (isRedirectError(e)) return;
+
+      if (e instanceof Error) {
+        setError('root', { message: e.message });
+      }
+    }
+  };
+
+  const handleChange = () => clearErrors('root');
+  const isDisable =
+    !isValid || isSubmitting || Boolean(Object.keys(errors).length);
 
   return (
-    <form className="flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={handleChange}
+      className="flex flex-col gap-6"
+    >
       <div className="flex flex-col gap-3">
         <FormInput
           {...register('email')}
           placeholder="Электронная почта"
+          autoComplete="email"
+          invalid={Boolean(errors.root)}
           error={errors.email?.message}
         />
         <FormInput
@@ -27,6 +53,7 @@ export function RegisterForm() {
           placeholder="Пароль"
           autoComplete="new-password"
           type="password"
+          invalid={Boolean(errors.root)}
           error={errors.password?.message}
         />
         <FormInput
@@ -34,14 +61,17 @@ export function RegisterForm() {
           placeholder="Подтвердите пароль"
           autoComplete="new-password"
           type="password"
+          invalid={Boolean(errors.root)}
           error={errors.confirm?.message}
         />
       </div>
-      <div className="flex flex-col gap-4">
-        <Button variant="gradient" size="lg" disabled={!isValid}>
-          Зарегистрироваться
-        </Button>
-      </div>
+      <FormButton
+        isLoading={isSubmitting}
+        disabled={isDisable}
+        error={errors.root?.message}
+      >
+        Зарегистрироваться
+      </FormButton>
     </form>
   );
 }

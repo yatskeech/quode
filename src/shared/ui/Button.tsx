@@ -34,7 +34,7 @@ const button = cva(
   },
 );
 
-type ButtonProps = VariantProps<typeof button> &
+export type ButtonProps = VariantProps<typeof button> &
   ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean };
 
 export function Button({

@@ -1,3 +1,3 @@
-import { handlers } from '@/shared/api/auth';
+import { handlers } from '@/shared/api';
 
 export const { GET, POST } = handlers;

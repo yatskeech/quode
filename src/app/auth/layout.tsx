@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
               <span className="text-gray text-sm">Или</span>
               <span className="bg-gray h-px w-full rounded" />
             </div>
-            <div className="flex flex-col gap-4">{children}</div>
+            <div className="flex flex-col gap-5">{children}</div>
           </div>
         </div>
       </main>

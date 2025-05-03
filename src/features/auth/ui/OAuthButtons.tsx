@@ -1,16 +1,15 @@
-'use client';
-
 import { RiGithubFill, RiGoogleFill } from 'react-icons/ri';
 
-import { signIn } from '@/shared/api/auth';
 import { Button } from '@/shared/ui';
+
+import { githubAction, googleAction } from '../api/action';
 
 export function OAuthButtons() {
   return (
     <div className="flex flex-wrap gap-2">
       <Button
         variant="outlined"
-        onClick={() => signIn('google', { redirectTo: '/' })}
+        onClick={googleAction}
         className="flex flex-grow items-center justify-center gap-4 text-nowrap"
       >
         <RiGoogleFill size={24} />
@@ -18,7 +17,7 @@ export function OAuthButtons() {
       </Button>
       <Button
         variant="outlined"
-        onClick={() => signIn('github', { redirectTo: '/' })}
+        onClick={githubAction}
         className="flex flex-grow items-center justify-center gap-4 text-nowrap"
       >
         <RiGithubFill size={24} />
