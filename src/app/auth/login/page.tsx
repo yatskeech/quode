@@ -1,5 +1,5 @@
 import { LoginForm } from '@/features/auth';
-import { NavLink } from '@/shared/ui';
+import { Link } from '@/shared/ui';
 
 export default function LoginPage() {
   return (
@@ -7,9 +7,9 @@ export default function LoginPage() {
       <LoginForm />
       <span className="text-gray text-center text-sm">
         Ещё нет аккаунта?{' '}
-        <NavLink href="/auth/register" className="text-white underline">
+        <Link href="/auth/register" className="text-white underline">
           Зарегистрироваться
-        </NavLink>
+        </Link>
       </span>
     </>
   );

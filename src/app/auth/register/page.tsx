@@ -1,5 +1,5 @@
 import { RegisterForm } from '@/features/auth';
-import { NavLink } from '@/shared/ui';
+import { Link } from '@/shared/ui';
 
 export default function RegisterPage() {
   return (
@@ -7,9 +7,9 @@ export default function RegisterPage() {
       <RegisterForm />
       <span className="text-gray text-center text-sm">
         Уже есть аккаунт?{' '}
-        <NavLink href="/auth/login" className="text-white underline">
+        <Link href="/auth/login" className="text-white underline">
           Войти
-        </NavLink>
+        </Link>
       </span>
     </>
   );

@@ -15,11 +15,13 @@ const button = cva(
         gradient:
           'bg-gradient-purple bg-size-[100%_100%] text-white hover:from-pink/75 hover:bg-size-[200%_200%]',
         text: 'text-gray hover:text-white',
+        none: '',
       },
       size: {
         md: 'rounded-xl px-8 py-3 text-sm',
         lg: 'rounded-2xl px-8 py-4 text-sm',
         icon: 'rounded-xl p-3',
+        none: '',
       },
       disabled: {
         true: 'pointer-events-none opacity-50',

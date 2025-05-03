@@ -1,6 +1,4 @@
-import Link from 'next/link';
-
-import { Button } from '@/shared/ui';
+import { Button, Link } from '@/shared/ui';
 import { CodeTyping } from '@/widgets/CodeTyping';
 
 export default function Landing() {
@@ -17,7 +15,9 @@ export default function Landing() {
           </p>
         </div>
         <Button asChild variant="gradient">
-          <Link href="/problems">Решить задачи</Link>
+          <Link variant="none" href="/problems">
+            Решить задачи
+          </Link>
         </Button>
       </div>
       <CodeTyping className="h-124 w-full max-w-200" />

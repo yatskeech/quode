@@ -8,6 +8,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import { verifyPassword } from '../lib';
 import { prisma } from './prisma';
 
+const prismaAdapter = PrismaAdapter(prisma);
+
 const ERROR_MESSAGE = 'Неверная электронная почта или неверный пароль';
 
 class AuthError extends CredentialsSignin {
@@ -23,7 +25,28 @@ class AuthError extends CredentialsSignin {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: {
+    ...prismaAdapter,
+    async getUserByEmail() {
+      return null;
+    },
+    async createUser(profile) {
+      if (profile.email) {
+        const existing = await prisma.user.findUnique({
+          where: { email: profile.email },
+        });
+        if (existing) {
+          return existing;
+        }
+      }
+
+      if (!prismaAdapter.createUser) {
+        throw new Error('PrismaAdapter is missing createUser');
+      }
+
+      return await prismaAdapter.createUser(profile);
+    },
+  },
   session: { strategy: 'jwt' },
   providers: [
     CredentialsProvider({
