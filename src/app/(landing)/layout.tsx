@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Footer } from '@/widgets/footer_';
+import { Footer } from '@/widgets/footer';
 import { Header } from '@/widgets/header';
 
 export default function LandingLayout({ children }: { children: ReactNode }) {
