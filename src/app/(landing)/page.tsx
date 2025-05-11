@@ -1,7 +1,7 @@
 import { Button, Link } from '@/shared/ui';
-import { CodeTyping } from '@/widgets/CodeTyping';
+import { CodeTyping } from '@/widgets/codeTyping';
 
-export default function Landing() {
+export default function LandingPage() {
   return (
     <div className="flex flex-col items-center gap-16">
       <div className="flex flex-col items-center gap-9">

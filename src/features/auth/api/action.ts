@@ -1,7 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { prisma } from '@/shared/api';
 import { signIn } from '@/shared/api';
 import { hashPassword } from '@/shared/lib';
@@ -16,14 +14,19 @@ export async function githubAction() {
   await signIn('github', { redirectTo: '/' });
 }
 
-export async function loginAction(data: LoginSchema) {
+export async function loginAction(
+  data: LoginSchema,
+  options?: {
+    callbackUrl?: string;
+  },
+) {
+  console.log(options?.callbackUrl);
+
   await signIn('credentials', {
     email: data.email,
     password: data.password,
-    redirect: false,
+    redirectTo: options?.callbackUrl ?? '/',
   });
-
-  redirect('/');
 }
 
 export async function registerAction(data: RegisterSchema) {

@@ -17,6 +17,9 @@
 
   --color-pink: #ff9898;
   --color-purple: #8054ff;
+
+  --color-green: #d1ff98;
+  --color-orange: #ffc198;
 }
 
 @layer base {

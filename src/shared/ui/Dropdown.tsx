@@ -85,8 +85,8 @@ Dropdown.Button = function DropdownButton({
       variant="text"
       size="none"
       className={cx('flex items-center gap-2 rounded-full px-6 py-2 text-sm', {
-        'bg-black-3 text-white': isOpen,
-        'hover:bg-black-3 hover:text-white': !isOpen,
+        'bg-black-4 text-white': isOpen,
+        'hover:bg-black-4 hover:text-white': !isOpen,
       })}
       onClick={toggle}
       onKeyDown={handleKeyDown}
@@ -132,7 +132,9 @@ Dropdown.Content = function DropdownContent({
 
   return (
     <div className="absolute inset-x-0 top-full z-10 mt-2">
-      <ul className="bg-black-3 overflow-hidden rounded-3xl">{children}</ul>
+      <ul className="bg-black-3 border-gray/25 overflow-hidden rounded-3xl border">
+        {children}
+      </ul>
     </div>
   );
 };

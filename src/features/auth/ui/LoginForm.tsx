@@ -9,7 +9,11 @@ import { type LoginSchema, loginSchema } from '../model/schema';
 import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
 
-export function LoginForm() {
+export function LoginForm({
+  searchParams,
+}: {
+  searchParams: Record<string, string | undefined>;
+}) {
   const {
     register,
     setError,
@@ -20,7 +24,9 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      await loginAction(data);
+      await loginAction(data, {
+        callbackUrl: searchParams.callbackUrl,
+      });
     } catch (e) {
       if (isRedirectError(e)) return;
 

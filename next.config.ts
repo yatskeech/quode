@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       { hostname: 'avatars.githubusercontent.com', pathname: '/**' },
     ],
   },
+  transpilePackages: ['next-mdx-remote'],
 };
 
 export default nextConfig;

@@ -2,7 +2,11 @@
 
 import Image from 'next/image';
 import { User } from 'next-auth';
-import { RiAccountCircleLine, RiLogoutCircleLine } from 'react-icons/ri';
+import {
+  RiAccountCircleLine,
+  RiEditCircleLine,
+  RiLogoutCircleLine,
+} from 'react-icons/ri';
 
 import { Button, Dropdown, Link, Loading } from '@/shared/ui';
 
@@ -39,7 +43,16 @@ export function Profile({ user }: { user: User }) {
                 className="flex items-center gap-2"
               >
                 <RiAccountCircleLine size={16} className="opacity-75" /> Мой
-                Профиль
+                профиль
+              </Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link
+                variant="none"
+                href="/problems"
+                className="flex items-center gap-2"
+              >
+                <RiEditCircleLine size={16} className="opacity-75" /> Все задачи
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>
