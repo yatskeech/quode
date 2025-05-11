@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { serialize } from 'next-mdx-remote/serialize';
 
 import { auth, prisma } from '@/shared/api';
@@ -7,8 +8,14 @@ import ProblemPage from './ProblemPage';
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();
 
+  const problemId = Number(params.id);
+
+  if (isNaN(problemId)) {
+    notFound();
+  }
+
   const problem = await prisma.problem.findFirst({
-    where: { id: Number(params.id) },
+    where: { id: problemId },
     select: {
       id: true,
       title: true,
@@ -19,11 +26,12 @@ export default async function Page({ params }: { params: { id: string } }) {
       memoryLimit: true,
     },
   });
-  const mdxSource = await serialize(problem?.description || '');
 
   if (!problem) {
-    return null;
+    notFound();
   }
+
+  const mdxSource = await serialize(problem.description);
 
   const solutions = await prisma.solution.findMany({
     where: {
