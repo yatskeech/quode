@@ -1,5 +1,5 @@
 import { Button, Link } from '@/shared/ui';
-import { CodeTyping } from '@/widgets/codeTyping';
+import { CodeTyping } from '@/widgets/codeTyping_';
 
 export default function LandingPage() {
   return (

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Footer } from '@/widgets/footer';
+import { Footer } from '@/widgets/footer_';
 import { Header } from '@/widgets/header';
 
 export default function ProblemsLayout({ children }: { children: ReactNode }) {
