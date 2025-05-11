@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { registerAction } from '../api/action';
@@ -10,6 +11,9 @@ import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
 
 export function RegisterForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+
   const {
     register,
     setError,
@@ -20,7 +24,7 @@ export function RegisterForm() {
 
   const onSubmit = async (data: RegisterSchema) => {
     try {
-      await registerAction(data);
+      await registerAction(data, callbackUrl ?? undefined);
     } catch (e) {
       if (isRedirectError(e)) return;
 

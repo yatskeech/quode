@@ -9,6 +9,15 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const problem = await prisma.problem.findFirst({
     where: { id: Number(params.id) },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      difficulty: true,
+      coverImage: true,
+      timeLimit: true,
+      memoryLimit: true,
+    },
   });
   const mdxSource = await serialize(problem?.description || '');
 

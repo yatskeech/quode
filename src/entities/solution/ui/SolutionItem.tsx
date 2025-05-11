@@ -43,7 +43,7 @@ export function SolutionItem({
         <span className="text-sm">
           {solution.passedCount}/{solution.totalCount}
         </span>
-        <div className="bg-black-4 h-2 w-24 overflow-hidden rounded-full">
+        <div className="bg-gray/50 h-2 w-24 overflow-hidden rounded-full">
           <div
             className={cx('h-full transition-all', {
               'bg-green': passedPercentage === 100,

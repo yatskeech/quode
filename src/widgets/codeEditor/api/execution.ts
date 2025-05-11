@@ -16,6 +16,18 @@ export async function testSolution(
   code: string,
   language: Language,
 ) {
+  const problem = await prisma.problem.findUnique({
+    where: { id: problemId },
+    select: {
+      timeLimit: true,
+      memoryLimit: true,
+    },
+  });
+
+  if (!problem) {
+    throw new Error('Problem not found');
+  }
+
   const tests = await prisma.test.findMany({
     where: { problemId, language },
     orderBy: { order: 'asc' },
@@ -34,8 +46,9 @@ export async function testSolution(
       files: [{ name: 'main', content: code + ' ' + wrapperCode }],
       stdin: input,
       args: [],
-      run_timeout: 3000,
+      run_timeout: problem.timeLimit,
       compile_timeout: 10000,
+      memory_limit: problem.memoryLimit * 1024 * 1024, // конвертируем МБ в байты
     };
 
     try {

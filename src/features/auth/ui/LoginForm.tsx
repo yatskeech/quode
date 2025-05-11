@@ -2,18 +2,18 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { loginAction } from '../api/action';
-import { type LoginSchema, loginSchema } from '../model/schema';
+import { LoginSchema, loginSchema } from '../model/schema';
 import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
 
-export function LoginForm({
-  searchParams,
-}: {
-  searchParams: Record<string, string | undefined>;
-}) {
+export function LoginForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+
   const {
     register,
     setError,
@@ -24,9 +24,7 @@ export function LoginForm({
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      await loginAction(data, {
-        callbackUrl: searchParams.callbackUrl,
-      });
+      await loginAction(data, { callbackUrl: callbackUrl ?? undefined });
     } catch (e) {
       if (isRedirectError(e)) return;
 
@@ -57,8 +55,8 @@ export function LoginForm({
         <FormInput
           {...register('password')}
           placeholder="Пароль"
-          type="password"
           autoComplete="current-password"
+          type="password"
           invalid={Boolean(errors.root)}
           error={errors.password?.message}
         />

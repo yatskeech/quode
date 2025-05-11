@@ -2,8 +2,10 @@
 
 import { Difficulty, type Solution } from '@prisma/client';
 import { cx } from 'class-variance-authority';
+import Image from 'next/image';
 import { type MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { useRef, useState } from 'react';
+import { RiDatabase2Line, RiTimeLine } from 'react-icons/ri';
 
 import { DifficultyMap } from '@/entities/problem';
 import { SolutionsList } from '@/entities/solution';
@@ -19,6 +21,9 @@ interface ProblemPageProps {
     title: string;
     description: string;
     difficulty: Difficulty;
+    coverImage?: string | null;
+    timeLimit: number;
+    memoryLimit: number;
   };
   solutions: Solution[];
   mdxSource: MDXRemoteSerializeResult;
@@ -62,6 +67,17 @@ export default function ProblemPage({
         <Tabs ref={tabsRef} className="h-full">
           <TabItem label="Условие задачи">
             <div className="h-full overflow-y-auto">
+              {problem.coverImage && (
+                <div className="mb-4 aspect-video h-48 w-full overflow-hidden rounded-2xl">
+                  <Image
+                    src={problem.coverImage}
+                    alt={problem.title}
+                    width={800}
+                    height={450}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              )}
               <h1 className="mb-1 text-2xl font-bold text-white">
                 {problem.title}
               </h1>
@@ -78,6 +94,16 @@ export default function ProblemPage({
                 >
                   {DifficultyMap[problem.difficulty]}
                 </span>
+              </div>
+              <div className="mb-4 flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <RiTimeLine className="h-5 w-5" />
+                  <span>Лимит времени: {problem.timeLimit}мс</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RiDatabase2Line className="h-5 w-5" />
+                  <span>Лимит памяти: {problem.memoryLimit}МБ</span>
+                </div>
               </div>
               <MDXRenderer mdxSource={mdxSource} />
             </div>

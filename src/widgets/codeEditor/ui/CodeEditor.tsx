@@ -24,6 +24,7 @@ export function CodeEditor({
 }: CodeEditorProps) {
   const [code, setCode] = useState('');
   const [language, setLanguage] = useState<Language>(Language.javascript);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEditorDidMount = (monaco: Monaco) => {
     monaco.editor.defineTheme('custom', theme);
@@ -38,10 +39,15 @@ export function CodeEditor({
   }, [problemId, selectedSolution, language]);
 
   const handleSubmit = async () => {
-    if (onSolutionSubmit) {
-      onSolutionSubmit(code, language);
-    } else {
-      await testSolution(problemId, code, language);
+    setIsSubmitting(true);
+    try {
+      if (onSolutionSubmit) {
+        await onSolutionSubmit(code, language);
+      } else {
+        await testSolution(problemId, code, language);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -49,8 +55,12 @@ export function CodeEditor({
     <div className="bg-black-3 flex h-full flex-col gap-4 p-4">
       <div className="flex items-center justify-between">
         <LanguageDropdown language={language} setLanguage={setLanguage} />
-        <Button variant="gradient" onClick={handleSubmit}>
-          Отправить
+        <Button
+          variant="gradient"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Отправка...' : 'Отправить'}
         </Button>
       </div>
       <Editor

@@ -1,28 +1,28 @@
-import { RiGithubFill, RiGoogleFill } from 'react-icons/ri';
+'use client';
 
-import { Button } from '@/shared/ui';
+import { useSearchParams } from 'next/navigation';
 
 import { githubAction, googleAction } from '../api/action';
+import { OAuthButton } from './OAuthButton';
 
 export function OAuthButtons() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
+
   return (
     <div className="flex flex-wrap gap-2">
-      <Button
-        variant="outlined"
-        onClick={googleAction}
-        className="flex flex-grow items-center justify-center gap-4 text-nowrap"
+      <OAuthButton
+        provider="google"
+        onClick={() => googleAction(callbackUrl ?? undefined)}
       >
-        <RiGoogleFill size={24} />
-        Войти через Google
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={githubAction}
-        className="flex flex-grow items-center justify-center gap-4 text-nowrap"
+        Продолжить с Google
+      </OAuthButton>
+      <OAuthButton
+        provider="github"
+        onClick={() => githubAction(callbackUrl ?? undefined)}
       >
-        <RiGithubFill size={24} />
-        Войти через Github
-      </Button>
+        Продолжить с GitHub
+      </OAuthButton>
     </div>
   );
 }

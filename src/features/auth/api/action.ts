@@ -6,12 +6,12 @@ import { hashPassword } from '@/shared/lib';
 
 import type { LoginSchema, RegisterSchema } from '../model/schema';
 
-export async function googleAction() {
-  await signIn('google', { redirectTo: '/' });
+export async function googleAction(callbackUrl?: string) {
+  await signIn('google', { redirectTo: callbackUrl ?? '/' });
 }
 
-export async function githubAction() {
-  await signIn('github', { redirectTo: '/' });
+export async function githubAction(callbackUrl?: string) {
+  await signIn('github', { redirectTo: callbackUrl ?? '/' });
 }
 
 export async function loginAction(
@@ -20,8 +20,6 @@ export async function loginAction(
     callbackUrl?: string;
   },
 ) {
-  console.log(options?.callbackUrl);
-
   await signIn('credentials', {
     email: data.email,
     password: data.password,
@@ -29,7 +27,10 @@ export async function loginAction(
   });
 }
 
-export async function registerAction(data: RegisterSchema) {
+export async function registerAction(
+  data: RegisterSchema,
+  callbackUrl?: string,
+) {
   const { email, password } = data;
 
   const existing = await prisma.user.findUnique({ where: { email } });
@@ -39,7 +40,7 @@ export async function registerAction(data: RegisterSchema) {
       data: { email, password: await hashPassword(password) },
     });
 
-    return await loginAction(data);
+    return await loginAction(data, { callbackUrl });
   }
 
   if (existing?.password) {
@@ -51,5 +52,5 @@ export async function registerAction(data: RegisterSchema) {
     data: { password: await hashPassword(password) },
   });
 
-  return await loginAction(data);
+  return await loginAction(data, { callbackUrl });
 }

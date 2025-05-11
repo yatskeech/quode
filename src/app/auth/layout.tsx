@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <div className="bg-decorations container">
       <main className="flex min-h-screen flex-grow items-center justify-center py-12">
-        <div className="bg-black-3 mx-auto flex w-full max-w-140 flex-col items-center gap-6 rounded-4xl border p-8">
+        <div className="bg-black-3 mx-auto flex w-full max-w-144 flex-col items-center gap-6 rounded-4xl border p-8">
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-col items-center gap-5">
               <Logo className="w-32" />
