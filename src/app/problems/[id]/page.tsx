@@ -5,10 +5,15 @@ import { auth, prisma } from '@/shared/api';
 
 import ProblemPage from './ProblemPage';
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const session = await auth();
+  const { id } = await params;
 
-  const problemId = Number(params.id);
+  const problemId = Number(id);
 
   if (isNaN(problemId)) {
     notFound();

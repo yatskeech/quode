@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 import { OAuthButtons } from '@/features/auth';
 import { Logo } from '@/shared/ui';
@@ -20,7 +20,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             </span>
           </div>
           <div className="flex w-full flex-col gap-6">
-            <OAuthButtons />
+            <Suspense>
+              <OAuthButtons />
+            </Suspense>
             <div className="flex items-center justify-between gap-6 text-center">
               <span className="bg-gray h-px w-full rounded" />
               <span className="text-gray text-sm">Или</span>

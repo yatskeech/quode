@@ -1,6 +1,7 @@
-import { auth } from '@/shared/api';
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+
+import { auth } from '@/shared/api';
 
 export async function middleware(request: NextRequest) {
   const session = await auth();

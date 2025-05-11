@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { email: profile.email },
         });
         if (existing) {
-          return existing;
+          return { ...existing, id: existing.id.toString() };
         }
       }
 
@@ -44,7 +44,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         throw new Error('PrismaAdapter is missing createUser');
       }
 
-      return await prismaAdapter.createUser(profile);
+      const user = await prismaAdapter.createUser(profile);
+      return { ...user, id: user.id.toString() };
     },
   },
   session: { strategy: 'jwt' },
@@ -69,7 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new AuthError(ERROR_MESSAGE);
         }
         return {
-          id: user.id,
+          id: user.id.toString(),
           name: user.name,
           email: user.email,
           image: user.image,
