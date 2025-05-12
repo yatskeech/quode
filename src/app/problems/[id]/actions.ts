@@ -34,7 +34,7 @@ export async function submitSolution(
     const solution = await prisma.solution.create({
       data: {
         problemId,
-        userId: Number(session.user.id),
+        userId: session.user.id,
         language: language as Language,
         code,
         status: passedCount === totalCount ? 'accepted' : 'rejected',
