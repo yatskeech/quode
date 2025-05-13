@@ -23,7 +23,7 @@ export async function submitSolution(
   try {
     const session = await auth();
 
-    if (!session?.user) {
+    if (!session?.user || !session.user.id) {
       return { success: false, error: 'Unauthorized' };
     }
 
@@ -34,7 +34,7 @@ export async function submitSolution(
     const solution = await prisma.solution.create({
       data: {
         problemId,
-        userId: Number(session.user.id),
+        userId: session.user.id,
         language: language as Language,
         code,
         status: passedCount === totalCount ? 'accepted' : 'rejected',

@@ -12,7 +12,7 @@ export default async function Page() {
   }
 
   const user = await prisma.user.findUnique({
-    where: { id: Number(session.user.id) },
+    where: { id: session.user.id },
     include: {
       solutions: {
         include: {

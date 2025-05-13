@@ -41,7 +41,7 @@ export default async function Page({
   const solutions = await prisma.solution.findMany({
     where: {
       problemId: problem.id,
-      ...(session?.user ? { userId: Number(session.user.id) } : {}),
+      ...(session?.user ? { userId: session.user.id } : {}),
     },
     orderBy: { submittedAt: 'desc' },
   });
