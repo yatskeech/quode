@@ -63,7 +63,7 @@ export default function ProblemPage({
 
   return (
     <div className="flex h-full w-full gap-4">
-      <div className="bg-black-3 w-[40%] overflow-y-auto rounded-3xl p-4">
+      <div className="bg-black-3 w-[45%] overflow-y-auto rounded-3xl p-4">
         <Tabs ref={tabsRef} className="h-full">
           <TabItem label="Условие задачи">
             <div className="h-full overflow-y-auto">
