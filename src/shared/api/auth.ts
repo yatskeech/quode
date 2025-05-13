@@ -45,7 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       const user = await prismaAdapter.createUser(profile);
-      return { ...user, id: user.id.toString() };
+      return { ...user, id: user.id };
     },
   },
   session: { strategy: 'jwt' },
