@@ -7,11 +7,16 @@ import ProblemPage from './ProblemPage';
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: { solutionId?: string };
 }) {
   const session = await auth();
   const { id } = await params;
+  const solutionId = searchParams.solutionId
+    ? Number(searchParams.solutionId)
+    : undefined;
 
   const problemId = Number(id);
 
@@ -51,6 +56,7 @@ export default async function Page({
       problem={problem}
       solutions={solutions}
       mdxSource={mdxSource}
+      initialSolutionId={solutionId}
     />
   );
 }

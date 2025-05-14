@@ -3,6 +3,7 @@
 import { type Solution, type User } from '@prisma/client';
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { LanguageMap } from '@/entities/language';
 import { DifficultyMap } from '@/entities/problem';
@@ -119,41 +120,44 @@ export default function ProfilePage({ user, stats }: ProfilePageProps) {
         {user.solutions.length > 0 ? (
           <div className="space-y-2">
             {user.solutions.slice(0, 10).map((solution) => (
-              <div
+              <Link
                 key={solution.id}
-                className="bg-black-3 flex items-center justify-between rounded-3xl p-6"
+                href={`/problems/${solution.problem.id}?solutionId=${solution.id}`}
+                className="block"
               >
-                <div>
-                  <div className="text-white">{solution.problem.title}</div>
-                  <div className="text-gray text-sm">
-                    {LanguageMap[solution.language]}
+                <div className="bg-black-3 hover:bg-black-4 flex items-center justify-between rounded-3xl p-6 transition-colors">
+                  <div>
+                    <div className="text-white">{solution.problem.title}</div>
+                    <div className="text-gray text-sm">
+                      {LanguageMap[solution.language]}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span
+                      className={cx('text-sm', {
+                        'text-green': solution.status === 'accepted',
+                        'text-pink': solution.status === 'rejected',
+                      })}
+                    >
+                      {solution.passedCount}/{solution.totalCount}
+                    </span>
+                    <span
+                      className={cx('text-sm', {
+                        'text-green': solution.problem.difficulty === 'easy',
+                        'text-orange': solution.problem.difficulty === 'medium',
+                        'text-pink': solution.problem.difficulty === 'hard',
+                      })}
+                    >
+                      {
+                        DifficultyMap[
+                          solution.problem
+                            .difficulty as keyof typeof DifficultyMap
+                        ]
+                      }
+                    </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span
-                    className={cx('text-sm', {
-                      'text-green': solution.status === 'accepted',
-                      'text-pink': solution.status === 'rejected',
-                    })}
-                  >
-                    {solution.passedCount}/{solution.totalCount}
-                  </span>
-                  <span
-                    className={cx('text-sm', {
-                      'text-green': solution.problem.difficulty === 'easy',
-                      'text-orange': solution.problem.difficulty === 'medium',
-                      'text-pink': solution.problem.difficulty === 'hard',
-                    })}
-                  >
-                    {
-                      DifficultyMap[
-                        solution.problem
-                          .difficulty as keyof typeof DifficultyMap
-                      ]
-                    }
-                  </span>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
         ) : (

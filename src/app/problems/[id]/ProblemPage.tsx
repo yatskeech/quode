@@ -4,7 +4,7 @@ import { Difficulty, type Solution } from '@prisma/client';
 import { cx } from 'class-variance-authority';
 import Image from 'next/image';
 import { type MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { RiDatabase2Line, RiTimeLine } from 'react-icons/ri';
 
 import { DifficultyMap } from '@/entities/problem';
@@ -27,6 +27,7 @@ interface ProblemPageProps {
   };
   solutions: Solution[];
   mdxSource: MDXRemoteSerializeResult;
+  initialSolutionId?: number;
 }
 
 const getSolutionStatus = (solutions: Solution[]) => {
@@ -40,12 +41,25 @@ export default function ProblemPage({
   problem,
   solutions: initialSolutions,
   mdxSource,
+  initialSolutionId,
 }: ProblemPageProps) {
   const [solutions, setSolutions] = useState(initialSolutions);
   const [selectedSolution, setSelectedSolution] = useState<Solution | null>(
-    null,
+    initialSolutionId
+      ? (solutions.find((s) => s.id === initialSolutionId) ?? null)
+      : null,
   );
   const tabsRef = useRef<TabsHandle>(null);
+
+  useEffect(() => {
+    if (initialSolutionId) {
+      const solution = solutions.find((s) => s.id === initialSolutionId);
+      if (solution) {
+        setSelectedSolution(solution);
+        tabsRef.current?.goTo(1);
+      }
+    }
+  }, [initialSolutionId, solutions]);
 
   const handleSolutionSelect = (solution: Solution) => {
     setSelectedSolution(solution);
