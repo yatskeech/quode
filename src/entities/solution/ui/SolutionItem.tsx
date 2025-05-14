@@ -41,7 +41,7 @@ export function SolutionItem({
       </div>
       <div className="flex items-center gap-2">
         <span className="text-sm">
-          {solution.passedCount}/{solution.totalCount}
+          {solution.passedCount} из {solution.totalCount} пройдено
         </span>
         <div className="bg-gray/50 h-2 w-24 overflow-hidden rounded-full">
           <div
