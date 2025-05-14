@@ -10,13 +10,11 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: { solutionId?: string };
+  searchParams: Promise<{ solutionId?: string }>;
 }) {
   const session = await auth();
   const { id } = await params;
-  const solutionId = searchParams.solutionId
-    ? Number(searchParams.solutionId)
-    : undefined;
+  const { solutionId } = await searchParams;
 
   const problemId = Number(id);
 
@@ -56,7 +54,7 @@ export default async function Page({
       problem={problem}
       solutions={solutions}
       mdxSource={mdxSource}
-      initialSolutionId={solutionId}
+      initialSolutionId={Number(solutionId)}
     />
   );
 }
