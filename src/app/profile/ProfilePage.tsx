@@ -139,7 +139,7 @@ export default function ProfilePage({ user, stats }: ProfilePageProps) {
                         'text-pink': solution.status === 'rejected',
                       })}
                     >
-                      {solution.passedCount} из {solution.totalCount} пройдено
+                      Пройдено: {solution.passedCount}/{solution.totalCount}
                     </span>
                     <span
                       className={cx('text-sm', {
